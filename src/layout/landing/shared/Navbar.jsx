@@ -1,28 +1,44 @@
 import {NavLink} from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 
-// Items to be displayed on navbar
-const listItems = (
-  <>
-    <li>
-      <NavLink to="/">
-        Home
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/register">
-       Register
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/blog">
-        Dashboard
-      </NavLink>
-    </li>
 
-  </>
-);
 
 export default function Navbar() {
+	const { user, logoutUser } = useAuth()
+	console.log(user);
+	
+	// Items to be displayed on navbar
+	const listItems = (
+	<>
+		<li>
+			<NavLink to="/">
+				Home
+			</NavLink>
+		</li>
+		<li>
+			<NavLink to="/blog">
+				Dashboard
+			</NavLink>
+		</li>
+		<li>
+			<NavLink to="/login">
+				Login
+			</NavLink>
+		</li>
+		<li>
+			{
+				user
+				? <button onClick={ logoutUser }>
+					Logout
+				</button>
+				: <NavLink to="/register">
+					Register
+				</NavLink>
+			}
+		</li>
+	</>
+	);
+	
 	return <div>
 <div className="navbar bg-base-100">
 	

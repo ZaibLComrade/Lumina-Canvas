@@ -3,9 +3,6 @@ import { useForm } from "react-hook-form";
 import useToast from "../../../../hooks/useToast";
 import useAuth from "../../../../hooks/useAuth";
 
-
-
-
 export default function RegisterForm() {
 	// const axiosSecure = useAxiosSecure();
 	
