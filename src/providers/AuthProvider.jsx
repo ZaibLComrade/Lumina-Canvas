@@ -17,6 +17,7 @@ export default function AuthProvider({ children }) {
 	const [user, setUser] = useState({});
 	
 	useEffect(() => {
+		// Observer
 		const unsubscribe = onAuthStateChanged(auth, loggedInUser => {
 			setUser(loggedInUser);
 			setLoading(false);
@@ -27,18 +28,25 @@ export default function AuthProvider({ children }) {
 		}
 	}, []);
 	
-	const createUser = (email, password) => {
+	// Create user with email and password
+	const registerUser = (email, password) => {
 		setLoading(true);
 		return createUserWithEmailAndPassword(auth, email, password);
 	}
-	const signInUser = (email, password) => {
+	
+	// Sign in user with email and password
+	const loginUser = (email, password) => {
 		setLoading(true);
 		return signInWithEmailAndPassword(auth, email, password);
 	}
-	const signOutUser = () => {
+	
+	// Log out user
+	const logoutUser = () => {
 		setLoading(true);
 		return signOut(auth);
 	}
+	
+	// Google sign in
 	const googleSignInUser = () => {
 		setLoading(true);
 		const provider = new GoogleAuthProvider;
@@ -48,9 +56,9 @@ export default function AuthProvider({ children }) {
 	// Context data to be passed upon children components
 	const authInfo = {
 		user,
-		createUser,
-		signInUser,
-		signOutUser,
+		registerUser,
+		loginUser,
+		logoutUser,
 		googleSignInUser,
 		updateProfile,
 		loading,

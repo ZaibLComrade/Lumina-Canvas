@@ -1,14 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
+import Register from "../layout/landing/auth/register/Register";
 import Root from "../layout/Root";
 
 const router = createBrowserRouter([
+	// main path
 	{
 		path: "/",
 		element: <Root/>,
-		children: []
+		children: [
+			{ path: "/login", element: <div>This is login</div> },
+			{ path: "/register", element: <Register/> },
+		]
 	},
-	{ path: "/login", element: <div>This is login</div> },
-	{ path: "/register", element: <div>This is register</div> },
+	
+	// Authentication paths
 ])
 
 export default router;

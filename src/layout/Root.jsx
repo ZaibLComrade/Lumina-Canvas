@@ -7,8 +7,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Root() {
 	const { loading } = useAuth();
+	
+	// Render loading
 	if(loading) return <LoadingScreen/>
-	return <div>
+	
+	// Render site if not loading
+	return <div className="font-inter">
 		<Navbar/>
 		<Outlet/>
 		<ToastContainer/>
