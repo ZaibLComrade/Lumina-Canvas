@@ -4,8 +4,8 @@ import useAuth from "../../../hooks/useAuth";
 
 
 export default function Navbar() {
+	// Get authentication states and functions
 	const { user, logoutUser } = useAuth()
-	console.log(user);
 	
 	// Items to be displayed on navbar
 	const listItems = (
@@ -16,7 +16,7 @@ export default function Navbar() {
 			</NavLink>
 		</li>
 		<li>
-			<NavLink to="/blog">
+			<NavLink to="/dashboard">
 				Dashboard
 			</NavLink>
 		</li>
@@ -27,7 +27,7 @@ export default function Navbar() {
 		</li>
 		<li>
 			{
-				user
+				user // Let's user log out if logged in
 				? <button onClick={ logoutUser }>
 					Logout
 				</button>
@@ -43,16 +43,19 @@ export default function Navbar() {
 <div className="navbar bg-base-100">
 	
 	{/* Title */}
-  <div className="flex-1">
-    <a className="text-4xl btn btn-ghost">Lumina Canvas</a>
-  </div>
+	<div className="flex-1">
+		<a className="text-2xl md:text-4xl text-black-1 btn btn-ghost">Lumina Canvas</a>
+	</div>
 	
 	{/* List Items */}
-  <div className="flex-none">
-    <ul className="px-1 space-x-2 menu menu-horizontal">
-		{ listItems }
-    </ul>
-  </div>
+	<div className="flex-none">
+		{ /* hidden in small devices */ }
+		<ul className="hidden px-1 md:flex space-x-2 menu menu-horizontal">
+			{ listItems }
+		</ul>
+		
+		{/* Visible in small devices */}
+	</div>
 	
 </div>
 	</div>

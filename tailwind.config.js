@@ -8,6 +8,9 @@ export default {
 		extend: {
 			fontFamily: {
 				"inter": ["Inter", "sans-serif"],
+			},
+			colors: {
+				"black-1": "#131313",
 			}
 		},
 	},
