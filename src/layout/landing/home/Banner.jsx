@@ -4,7 +4,6 @@ import bannerImg from "../../../assets/banner.jpg";
 export default function Banner() {
 	return <div style={{
 		backgroundImage: `url(${bannerImg})`,
-		height: "calc(100vh - 68px)",
 		backgroundPosition: "center",
 		backgroundAttachment: "fixed",
 		backgroundRepeat: "no-repeat",
@@ -12,7 +11,9 @@ export default function Banner() {
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
-	}}>
+	}}
+		className="md:h-[calc(100vh-68px)] h-[calc(100vh-64px)]"
+	>
 		{/* Overlay */}
 		<div className="absolute w-full h-full bg-black/60"></div>
 		<div className="absolute w-full h-full bg-primary/10"></div>

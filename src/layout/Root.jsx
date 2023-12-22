@@ -14,7 +14,9 @@ export default function Root() {
 	// Render site if not loading
 	return <div className="font-inter">
 		<Navbar/>
-		<Outlet/>
+		<div className="md:min-h-[calc(100vh-68px)] min-h-[calc(100vh-64px)]">
+			<Outlet/>
+		</div>
 		<ToastContainer/>
 	</div>
 }

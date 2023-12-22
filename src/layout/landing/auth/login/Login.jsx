@@ -3,7 +3,7 @@ import LoginForm from "./LoginForm";
 // Login Page
 export default function Login() {
 	return (
-		<div className="relative top-0 h-[calc(100vh-68px)]">
+		<div className="relative top-0 md:min-h-[calc(100vh-68px)] min-h-[calc(100vh-64px)]">
 			
 			{/* Overlays */}
 			<div className="absolute z-[3] w-full h-full top-0 bg-black/10"></div>
