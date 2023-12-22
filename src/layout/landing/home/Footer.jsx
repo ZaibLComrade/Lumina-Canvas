@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
@@ -6,10 +7,10 @@ export default function Footer() {
 	return <div>
 <footer className="p-10 rounded footer footer-center bg-base-200 text-base-content">
   <nav className="grid grid-flow-col gap-4">
-    <a className="link link-hover">About us</a>
-    <a className="link link-hover">Contact</a>
-    <a className="link link-hover">Jobs</a>
-    <a className="link link-hover">Press kit</a>
+    <Link to="/" className="link link-hover">Home</Link>
+    <Link to="/dashboard" className="link link-hover">Dashboard</Link>
+    <Link to="/login" className="link link-hover">Login</Link>
+    <Link to="/register" className="link link-hover">Register</Link>
   </nav> 
   <nav>
     <div className="text-3xl grid grid-flow-col gap-4">

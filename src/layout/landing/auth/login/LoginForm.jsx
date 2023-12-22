@@ -50,7 +50,7 @@ export default function LoginForm() {
 	
 	const handleGoogleSignIn = e => {
 		e.preventDefault();
-		githubSignInUser()
+		handleGoogleSignIn()
 			.then((result) => {
 				const user = result.user;
 				const userData = {
@@ -74,7 +74,7 @@ export default function LoginForm() {
 	
 	const handleGithubSignIn = e => {
 		e.preventDefault();
-		googleSignInUser()
+		handleGithubSignIn()
 			.then((result) => {
 				const user = result.user;
 				const userData = {
@@ -152,7 +152,7 @@ export default function LoginForm() {
 					<p className="relative w-8 mx-auto font-bold bg-base-100 -top-3"> Or</p>
 					<div className="space-y-2">
 					<button onClick={ handleGoogleSignIn } className="flex items-center w-full btn btn-accent gap-2"><FcGoogle className="text-xl"/><div>Login with Google</div></button>
-					<button onClick={ handleGoogleSignIn } className="flex items-center w-full text-white btn bg-[#171515] gap-2"><FaGithub className="text-xl"/><div>Login with Github</div></button>
+					<button onClick={ handleGithubSignIn } className="flex items-center w-full text-white btn bg-[#171515] gap-2"><FaGithub className="text-xl"/><div>Login with Github</div></button>
 					</div>
 				</div>
 				<div className="mx-auto text-sm text-center md:text-base">
