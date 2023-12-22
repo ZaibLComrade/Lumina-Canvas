@@ -48,7 +48,7 @@ export default function Navbar() {
   {/* Visible in small devices */}
   <div className="navbar-end">
     <div>
-		<ul className="hidden px-1 menu menu-horizontal md:flex">
+		<ul className="hidden px-1 space-x-2 menu menu-horizontal md:flex">
          { listItems }
        </ul>
       <div className="dropdown dropdown-end z-[9999] md:hidden">

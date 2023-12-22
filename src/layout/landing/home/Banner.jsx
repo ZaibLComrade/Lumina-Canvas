@@ -21,10 +21,10 @@ export default function Banner() {
 		{/* Content */}
 		<div className="z-10 space-y-6 text-white text-center max-w-[600px]">
 			{/* title */}
-			<h1 className="text-5xl">Master Your Day,<br/> Every Day!</h1>
+			<h1 className="text-4xl font-bold md:text-5xl">Master Your Day,<br/> Every Day!</h1>
 			
 			{/* subtitle */}
-			<h1 className="text-xl">Effortless Task Management for Peak Productivity</h1>
+			<h1 className="text-md md:text-xl">Effortless Task Management for Peak Productivity</h1>
 			
 			<Link to="/login" className="btn btn-primary">Let's Explore</Link>
 		</div>

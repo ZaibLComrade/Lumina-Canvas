@@ -11,6 +11,7 @@ export default {
 			},
 			colors: {
 				"black-1": "#131313",
+				"gray-1": "#505050",
 			}
 		},
 	},
