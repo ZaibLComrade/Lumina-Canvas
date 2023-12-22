@@ -3,11 +3,12 @@ import useAuth from "../../../../hooks/useAuth";
 import {useState} from "react";
 import { FcGoogle } from "react-icons/fc";
 import useToast from "../../../../hooks/useToast";
+import { FaGithub } from "react-icons/fa";
 // import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 export default function LoginForm() {
 	// Initializing hooks
-	const { loginUser, googleSignInUser, user, setLoading } = useAuth();
+	const { loginUser, googleSignInUser, user, setLoading, githubSignInUser } = useAuth();
 	const [tempEmail, setTempEmail] = useState("");
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -48,6 +49,30 @@ export default function LoginForm() {
 	};
 	
 	const handleGoogleSignIn = e => {
+		e.preventDefault();
+		githubSignInUser()
+			.then((result) => {
+				const user = result.user;
+				const userData = {
+					name: user.displayName,
+					image: user.photoURL,
+					email: user.email,
+					role: "user",
+					creationTime: user?.metadata?.creationTime,
+					lastSignInTime: user?.metadata?.lastSignInTime,
+				}
+				console.log(userData);
+				
+				// axiosSecure.put(`/users/${user.email}`, userData);
+				
+				successToast("Successfully logged in");
+				navigate(location?.state || "/");
+				setLoading(false);
+			})
+			.catch(err => console.error(err));
+	}
+	
+	const handleGithubSignIn = e => {
 		e.preventDefault();
 		googleSignInUser()
 			.then((result) => {
@@ -125,7 +150,10 @@ export default function LoginForm() {
 				<div className="w-full px-8 mx-auto mb-4 text-center">
 					<hr className="w-full border"/>
 					<p className="relative w-8 mx-auto font-bold bg-base-100 -top-3"> Or</p>
+					<div className="space-y-2">
 					<button onClick={ handleGoogleSignIn } className="flex items-center w-full btn btn-accent gap-2"><FcGoogle className="text-xl"/><div>Login with Google</div></button>
+					<button onClick={ handleGoogleSignIn } className="flex items-center w-full text-white btn bg-[#171515] gap-2"><FaGithub className="text-xl"/><div>Login with Github</div></button>
+					</div>
 				</div>
 				<div className="mx-auto text-sm text-center md:text-base">
 					<p>

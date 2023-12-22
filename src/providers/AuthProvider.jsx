@@ -6,6 +6,7 @@ import {
 	updateProfile,
 	GoogleAuthProvider,
 	onAuthStateChanged,
+	GithubAuthProvider,
 	signInWithPopup,
 	signOut,
 } from "firebase/auth";
@@ -53,6 +54,12 @@ export default function AuthProvider({ children }) {
 		return signInWithPopup(auth, provider);
 	}
 	
+	const githubSignInUser = () => {
+		setLoading(true);
+		const provider = new GithubAuthProvider();
+		return signInWithPopup(auth, provider);
+	}
+	
 	// Context data to be passed upon children components
 	const authInfo = {
 		user,
@@ -62,6 +69,7 @@ export default function AuthProvider({ children }) {
 		googleSignInUser,
 		updateProfile,
 		loading,
+		githubSignInUser,
 		setLoading,
 	};
 	
