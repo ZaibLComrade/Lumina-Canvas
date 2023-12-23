@@ -15,42 +15,14 @@ export default function Navbar() {
 			})
 	}
 	
-	// Items to be displayed on navbar
-	const listItems = (
-	<>
-		<li>
-			<NavLink to="/">
-				Home
-			</NavLink>
-		</li>
-		<li>
-			<NavLink to="/dashboard">
-				Dashboard
-			</NavLink>
-		</li>
-		<li>
-			<NavLink to="/login">
-				Login
-			</NavLink>
-		</li>
-		<li>
-			{
-				user // Let's user log out if logged in
-				? <button onClick={ logoutUser }>
-					Logout
-				</button>
-				: <NavLink to="/register">
-					Register
-				</NavLink>
-			}
-		</li>
-	</>
-	);
-	
 	return <div className="z-[9999]">
 		<div className="navbar bg-base-100">
 			<div className="navbar-start">
 				<a className="text-2xl md:text-4xl btn btn-ghost">Lumina Canvas</a>
+			</div>
+			
+			<div className="navbar-center">
+				<h2 className="text-3xl font-medium md:text-4xl">Dashboard</h2>
 			</div>
 			
 			<div className="navbar-end">

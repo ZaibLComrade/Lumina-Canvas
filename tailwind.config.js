@@ -12,6 +12,9 @@ export default {
 			colors: {
 				"black-1": "#131313",
 				"gray-1": "#505050",
+				"gray-2": "#E0E0E0",
+				"blue-1": "#2F80ED",
+				"green-1": "#219653",
 			}
 		},
 	},
