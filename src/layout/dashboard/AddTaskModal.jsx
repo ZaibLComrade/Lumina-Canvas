@@ -1,13 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useToast from "../../hooks/useToast";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import PropTypes from "prop-types"
 
 export default function AddTaskModal({ toggleModal, setToggleModal }) {
-	// const axiosSecure = useAxiosSecure();
-	
+	const axiosSecure = useAxiosSecure();
+	const { user } = useAuth();
 	
 	// Initializing toast functions
-	const { successToast, warnToast, errorToast } = useToast();
+	const { successToast, errorToast } = useToast();
 
 	
 	// Initializing react-hook-form
@@ -22,10 +24,15 @@ export default function AddTaskModal({ toggleModal, setToggleModal }) {
 	const onSubmit = newTask => {
 		// Converting deadline to iso string
 		newTask.deadline = new Date(newTask.deadline).toISOString()
-		console.log(newTask);
+		newTask.status="todo";
+		newTask.email= user.email;
+		
+		axiosSecure.post("/tasks", newTask)
+			.then(({ data }) => {
+				if(data.acknowledged) successToast("Successfully created task");
+			})
 		
 		reset();
-		setToggleModal(false);
 	}
 	
 	// Triggered when error while submitting form
@@ -100,4 +107,10 @@ export default function AddTaskModal({ toggleModal, setToggleModal }) {
 		</div>
 	</>
 	);
+
+}
+
+AddTaskModal.propTypes = {
+	toggleModal: PropTypes.bool,
+	setToggleModal: PropTypes.func,
 }

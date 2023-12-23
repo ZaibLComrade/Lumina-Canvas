@@ -1,4 +1,5 @@
 import {useState} from "react"
+import {ToastContainer} from "react-toastify"
 import AddButton from "../../components/AddButton"
 import AddTaskModal from "./AddTaskModal"
 import Navbar from "./Navbar"
@@ -16,6 +17,8 @@ export default function Dashboard() {
 			<AddButton setToggleModal={setToggleModal}/>
 		</div>
 		
+		{/* Modals and notifications */}
 		<AddTaskModal toggleModal={toggleModal} setToggleModal={setToggleModal}/>
+		<ToastContainer/>
 	</div>
 }

@@ -1,4 +1,3 @@
-import TaskCard from "../../components/TaskCard";
 import TaskSection from "./TaskSection";
 
 export default function Tasks() {
