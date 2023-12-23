@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 
 
 
-export default function Navbar() {
+export default function Navbar({ setToggleModal }) {
 	// Get authentication states and functions
 	const { user, logoutUser } = useAuth()
 	const navigate = useNavigate();
@@ -17,13 +17,13 @@ export default function Navbar() {
 	}
 	
 	return <div className="z-[9999]">
-		<div className="navbar bg-base-100">
+		<div className="bg-white text-neutral navbar">
 			<div className="navbar-start">
 				<a className="text-2xl md:text-4xl btn btn-ghost">Lumina Canvas</a>
 			</div>
 			
 			<div className="hidden navbar-center md:block">
-				<AddButton/>
+				<AddButton setToggleModal={ setToggleModal }/>
 			</div>
 			
 			<div className="navbar-end">
