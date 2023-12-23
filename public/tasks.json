@@ -1,0 +1,42 @@
+[
+	{ 
+		"id": "task1",
+		"title":"Project X dashboard UI design",
+		"description":"Dashboard UI design is a visually engaging and intuitively structured interface tailored to streamline project management",
+		"priority":"high",
+		"status":"todo",
+		"deadline":"Not specified"
+	},
+	{ 
+		"id": "task2",
+		"title":"Project X dashboard UI design",
+		"description":"Dashboard UI design is a visually engaging and intuitively structured interface tailored to streamline project management",
+		"priority":"mid",
+		"status":"ongoing",
+		"deadline":"Not specified"
+	},
+	{ 
+		"id": "task3",
+		"title":"Project X dashboard UI design",
+		"description":"Dashboard UI design is a visually engaging and intuitively structured interface tailored to streamline project management",
+		"priority":"low",
+		"status":"completed",
+		"deadline":"Not specified"
+	},
+	{ 
+		"id": "task4",
+		"title":"Project X dashboard UI design",
+		"description":"Dashboard UI design is a visually engaging and intuitively structured interface tailored to streamline project management",
+		"priority":"high",
+		"status":"completed",
+		"deadline":"Not specified"
+	},
+	{ 
+		"id": "task5",
+		"title":"Project X dashboard UI design",
+		"description":"Dashboard UI design is a visually engaging and intuitively structured interface tailored to streamline project management",
+		"priority":"low",
+		"status":"todo",
+		"deadline":"Not specified"
+	}
+]

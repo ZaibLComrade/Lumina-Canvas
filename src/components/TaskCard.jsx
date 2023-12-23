@@ -7,8 +7,8 @@ import Status from "./Status";
 
 const getPriority = (priority) => {
 	if(priority === "high") return <img className="w-10 h-10" src={ highPri }/>
-	if(priority === "mid") return <img src={ midPri }/>
-	if(priority === "low") return <img src={ lowPri }/>
+	if(priority === "mid") return <img className="w-10 h-10" src={ midPri }/>
+	if(priority === "low") return <img className="w-10 h-10" src={ lowPri }/>
 }
 
 export default function TaskCard({ title, description, priority, deadline, status }) {
