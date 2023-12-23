@@ -23,7 +23,7 @@ export default function LoginForm() {
 		const password = form.get("password");
 		if (email === user?.email) {
 				warnToast("User already logged in")
-				navigate("/");
+				navigate("/dashboard");
 			return;
 		}
 		
@@ -34,7 +34,7 @@ export default function LoginForm() {
 				// axiosSecure.put(`/users/${user.email}`, update);
 				
 				successToast("Successfully logged in")
-				navigate(location?.state || "/");
+				navigate(location?.state || "/dashboard");
 				setLoading(false);
 			})
 			.catch((err) => {
@@ -50,7 +50,7 @@ export default function LoginForm() {
 	
 	const handleGoogleSignIn = e => {
 		e.preventDefault();
-		handleGoogleSignIn()
+		googleSignInUser()
 			.then((result) => {
 				const user = result.user;
 				const userData = {
@@ -66,7 +66,7 @@ export default function LoginForm() {
 				// axiosSecure.put(`/users/${user.email}`, userData);
 				
 				successToast("Successfully logged in");
-				navigate(location?.state || "/");
+				navigate(location?.state || "/dashboard");
 				setLoading(false);
 			})
 			.catch(err => console.error(err));
@@ -74,7 +74,7 @@ export default function LoginForm() {
 	
 	const handleGithubSignIn = e => {
 		e.preventDefault();
-		handleGithubSignIn()
+		githubSignInUser()
 			.then((result) => {
 				const user = result.user;
 				const userData = {
@@ -90,7 +90,7 @@ export default function LoginForm() {
 				// axiosSecure.put(`/users/${user.email}`, userData);
 				
 				successToast("Successfully logged in");
-				navigate(location?.state || "/");
+				navigate(location?.state || "/dashboard");
 				setLoading(false);
 			})
 			.catch(err => console.error(err));
