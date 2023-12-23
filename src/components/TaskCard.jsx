@@ -9,6 +9,8 @@ import { FaTrash } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useToast from "../hooks/useToast";
+import { FaEdit } from "react-icons/fa";
+import useModalProps from "../hooks/useModalProps";
 
 const getPriority = (priority) => {
 	if(priority === "high") return <img className="w-10 h-10" src={ highPri }/>
@@ -18,10 +20,12 @@ const getPriority = (priority) => {
 
 
 
-export default function TaskCard({ _id, title, description, priority, deadline, status }) {
+export default function TaskCard({ _id, title, description, priority, deadline, status, refetch }) {
 	const { successToast } = useToast()
 	const axiosSecure = useAxiosSecure();
+	const { setEditMode, setId, setToggleModal } = useModalProps();
 	
+	// Handles delete operation
 	const handleDelete = () => {
 		Swal.fire({
 			title: "Are you sure?",
@@ -34,10 +38,20 @@ export default function TaskCard({ _id, title, description, priority, deadline, 
 			if(res.isDenied) {
 				axiosSecure.delete(`/tasks/${_id}`)
 					.then(({ data }) => {
-						if(data.deletedCount) successToast("Deleted task successfully");
+						if(data.deletedCount) {
+							refetch();
+							successToast("Deleted task successfully");
+						}
 					})
 			}
 		})
+	}
+	
+	// Handles edit operation
+	const handleEdit = () => {
+		setToggleModal(true);
+		setEditMode(true);
+		setId(_id);
 	}
 	
 	const date = format(new Date(deadline), "PPP")
@@ -62,21 +76,30 @@ export default function TaskCard({ _id, title, description, priority, deadline, 
 		</div>
 		
 		{/* Deadline */}
-		<div className="flex items-center text-xs gap-1 md:text-base">
-			<FaClock className="font-medium text-accent"/>
-			<p><span className="text-accent">Deadline:</span> { date }</p>
+		<div className="flex text-xs lg:text-base">
+			<p><span className="flex items-center text-accent gap-1">
+				<FaClock className="font-medium text-accent"/>
+				Deadline:
+			</span> { date }</p>
 		</div>
 		
-		<button onClick={handleDelete} className="absolute bottom-5 right-5">
-			<FaTrash className="text-xl text-red-800"/>
-		</button>
+		<div className="absolute flex items-center gap-4 bottom-5 right-5">
+			<button onClick={handleEdit}>
+				<FaEdit className="text-xl lg:text-2xl text-neutral"/>
+			</button>
+			<button onClick={handleDelete}>
+				<FaTrash className="text-lg text-red-800 lg:text-xl"/>
+			</button>
+		</div>
 	</div>
 }
 
 TaskCard.propTypes = {
+	_id: PropTypes.string,
 	title: PropTypes.string,
 	description: PropTypes.string,
 	priority: PropTypes.string,
 	deadline: PropTypes.string,
 	status: PropTypes.string,
+	refetch: PropTypes.func,
 }

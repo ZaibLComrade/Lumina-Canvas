@@ -1,13 +1,15 @@
-import {NavLink, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import AddButton from "../../components/AddButton";
 import useAuth from "../../hooks/useAuth";
+import useModalProps from "../../hooks/useModalProps";
 
 
 
-export default function Navbar({ setToggleModal }) {
+export default function Navbar() {
 	// Get authentication states and functions
 	const { user, logoutUser } = useAuth()
 	const navigate = useNavigate();
+	const { setToggleModal } = useModalProps();
 	
 	const handleLogout = () => {
 		logoutUser()

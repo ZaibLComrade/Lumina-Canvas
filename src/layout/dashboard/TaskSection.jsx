@@ -32,6 +32,7 @@ export default function TaskSection({ title, color, filterTaskType }) {
 				status={ task.status }
 				priority={ task.priority }
 				deadline={ task.deadline }
+				refetch={ refetch }
 			/>) }
 		</div>
 	</div>

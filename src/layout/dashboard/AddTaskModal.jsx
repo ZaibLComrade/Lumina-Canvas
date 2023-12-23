@@ -2,11 +2,12 @@ import { useForm } from "react-hook-form";
 import useToast from "../../hooks/useToast";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import PropTypes from "prop-types"
+import useModalProps from "../../hooks/useModalProps";
 
-export default function AddTaskModal({ toggleModal, setToggleModal }) {
+export default function AddTaskModal() {
 	const axiosSecure = useAxiosSecure();
 	const { user } = useAuth();
+	const { toggleModal, setToggleModal, editMode, id } = useModalProps();
 	
 	// Initializing toast functions
 	const { successToast, errorToast } = useToast();
@@ -27,11 +28,22 @@ export default function AddTaskModal({ toggleModal, setToggleModal }) {
 		newTask.status="todo";
 		newTask.email= user.email;
 		
-		axiosSecure.post("/tasks", newTask)
+		if(editMode) {
+			// Update existing task if edit mode is enabled
+			axiosSecure.patch(`/tasks/${id}`, newTask)
 			.then(({ data }) => {
 				if(data.acknowledged) successToast("Successfully created task");
 			})
+		} else {
+			// Post new task if edit mode is not enabled
+			axiosSecure.post("/tasks", newTask)
+			.then(({ data }) => {
+				if(data.acknowledged) successToast("Successfully created task");
+			})
+		}
+
 		
+		setToggleModal(false);
 		reset();
 	}
 	
@@ -42,7 +54,7 @@ export default function AddTaskModal({ toggleModal, setToggleModal }) {
 	
 	return (<>
 		{/* Overlay */}
-		<div onClick={ () => setToggleModal(false) } className={`fixed top-0 left-0 w-screen h-screen bg-neutral/50 ${toggleModal ? "block" : "hidden"}`}></div>
+		<div onClick={ () => setToggleModal(false) } className={`fixed top-0 left-0 w-screen h-screen debug bg-neutral/50 ${toggleModal ? "block" : "hidden"}`}></div>
 		
 		{/* Form */}
 		<div className={`fixed top-1/2 max-[320px]:max-w-[300px] -translate-x-1/2 -translate-y-1/2 left-1/2`}>
@@ -50,7 +62,7 @@ export default function AddTaskModal({ toggleModal, setToggleModal }) {
 			<button onClick={() => setToggleModal(false)} className="absolute z-10 btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
 				<form className="card-body" onSubmit={handleSubmit(onSubmit, onError)}>
 					<h1 className="mx-auto text-3xl font-semibold w-max font-playfair-display">
-						New Task
+						{ editMode ? "Edit task" : "New Task" }
 					</h1>
 					<div className="form-control">
 						<label className="label">
@@ -100,17 +112,14 @@ export default function AddTaskModal({ toggleModal, setToggleModal }) {
 						</select>
 					</div>
 					<div className="mt-6 form-control">
-						<button className="btn btn-primary">Create Task</button>
+						<button className="btn btn-primary">
+							{ editMode ? "Save Changes" : "Create Task" }
+						</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</>
 	);
-
 }
 
-AddTaskModal.propTypes = {
-	toggleModal: PropTypes.bool,
-	setToggleModal: PropTypes.func,
-}
