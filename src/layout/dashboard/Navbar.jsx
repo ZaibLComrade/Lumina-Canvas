@@ -1,4 +1,5 @@
 import {NavLink, useNavigate} from "react-router-dom";
+import AddButton from "../../components/AddButton";
 import useAuth from "../../hooks/useAuth";
 
 
@@ -21,8 +22,8 @@ export default function Navbar() {
 				<a className="text-2xl md:text-4xl btn btn-ghost">Lumina Canvas</a>
 			</div>
 			
-			<div className="navbar-center">
-				<h2 className="text-3xl font-medium md:text-4xl">Dashboard</h2>
+			<div className="hidden navbar-center md:block">
+				<AddButton/>
 			</div>
 			
 			<div className="navbar-end">
@@ -38,8 +39,8 @@ export default function Navbar() {
 							</div>
 						</div>
 						
-						{/* Info */}
-						<div className="font-normal text-left">
+						{/* Info for larger devices*/}
+						<div className="hidden font-normal text-left md:block">
 							{/* Name */}
 							<div className="font-bold">{ user.displayName }</div>
 							
@@ -50,6 +51,12 @@ export default function Navbar() {
 					
 					{/* Dropdown menu */}
 					<ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+						<li className="border-b md:hidden border-gray-2">
+							<a className="flex flex-col items-start mb-1">
+								<div className="font-bold">{ user.displayName }</div>
+								<div className="text-xs">{ user.email }</div>
+							</a>
+						</li>
 						<li onClick={handleLogout}><a>Logout</a></li>
 					</ul>
 				</div>
