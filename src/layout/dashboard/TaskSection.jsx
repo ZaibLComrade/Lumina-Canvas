@@ -3,12 +3,14 @@ import TaskCard from "../../components/TaskCard";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
+import useModalProps from "../../hooks/useModalProps";
 
 export default function TaskSection({ title, color, filterTaskType }) {
 	// Color is applied only to border-color
 	
 	const{ user } = useAuth();
 	const axiosSecure = useAxiosSecure();
+	const { doRefetch, setDoRefetch } = useModalProps();
 	
 	// To fetch tasks data
 	const { data: tasks=[], isPending, refetch } = useQuery({
@@ -18,6 +20,10 @@ export default function TaskSection({ title, color, filterTaskType }) {
 			return data
 		}
 	})
+	if(doRefetch) {
+		setDoRefetch(false);
+		refetch()
+	}
 	
 	return <div>
 		<h2 style={{ borderColor: `${color}` }} className={`pb-3 mb-5 text-xl font-medium text-center border-b`}>{ title }</h2>

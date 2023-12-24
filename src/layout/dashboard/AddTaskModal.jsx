@@ -7,7 +7,7 @@ import useModalProps from "../../hooks/useModalProps";
 export default function AddTaskModal() {
 	const axiosSecure = useAxiosSecure();
 	const { user } = useAuth();
-	const { toggleModal, setToggleModal, editMode, id } = useModalProps();
+	const { toggleModal, setToggleModal, editMode, id, setDoRefetch } = useModalProps();
 	
 	// Initializing toast functions
 	const { successToast, errorToast } = useToast();
@@ -24,25 +24,34 @@ export default function AddTaskModal() {
 	// Triggered when submitting form
 	const onSubmit = newTask => {
 		// Converting deadline to iso string
-		newTask.deadline = new Date(newTask.deadline).toISOString()
-		newTask.status="todo";
+		if(!editMode) {
+			newTask.deadline = new Date(newTask.deadline).toISOString()
+			newTask.status="todo";
+		}
 		newTask.email= user.email;
 		
 		if(editMode) {
 			// Update existing task if edit mode is enabled
-			axiosSecure.patch(`/tasks/${id}`, newTask)
-			.then(({ data }) => {
-				if(data.acknowledged) successToast("Successfully created task");
+			const updatedTask = {};
+			
+			// Creating object to ensure partial update by assigning only updated fields
+			Object.keys(newTask).map(objKey => {
+				if(newTask[objKey]) updatedTask[objKey] = newTask[objKey];
 			})
+			
+			axiosSecure.patch(`/tasks/${id}`, updatedTask)
+				.then(({ data }) => {
+					if(data.acknowledged) successToast("Successfully updated task");
+				})
 		} else {
 			// Post new task if edit mode is not enabled
 			axiosSecure.post("/tasks", newTask)
-			.then(({ data }) => {
-				if(data.acknowledged) successToast("Successfully created task");
-			})
+				.then(({ data }) => {
+					if(data.acknowledged) successToast("Successfully created task");
+				})
 		}
-
 		
+		setDoRefetch(true);
 		setToggleModal(false);
 		reset();
 	}
@@ -54,7 +63,7 @@ export default function AddTaskModal() {
 	
 	return (<>
 		{/* Overlay */}
-		<div onClick={ () => setToggleModal(false) } className={`fixed top-0 left-0 w-screen h-screen debug bg-neutral/50 ${toggleModal ? "block" : "hidden"}`}></div>
+		<div onClick={ () => setToggleModal(false) } className={`fixed top-0 left-0 w-screen h-screen bg-neutral/50 ${toggleModal ? "block" : "hidden"}`}></div>
 		
 		{/* Form */}
 		<div className={`fixed top-1/2 max-[320px]:max-w-[300px] -translate-x-1/2 -translate-y-1/2 left-1/2`}>
@@ -69,7 +78,7 @@ export default function AddTaskModal() {
 							<span className="label-text">Title</span>
 						</label>
 						<input
-							{...register("title", {requried: true})}
+							{...register("title", {requried: !editMode})}
 							type="text"
 							placeholder="title"
 							className="input input-bordered"
@@ -82,7 +91,7 @@ export default function AddTaskModal() {
 						<textarea
 							className="textarea textarea-bordered"
 							placeholder="Description"
-							{ ...register("description", { required: true }) }
+							{ ...register("description", { required: !editMode }) }
 							rows={4}
 						/>
 					</div>
@@ -91,7 +100,7 @@ export default function AddTaskModal() {
 							<span className="label-text">Deadline</span>
 						</label>
 						<input
-							{...register("deadline", {requried: true})}
+							{...register("deadline", {requried: !editMode})}
 							type="date"
 							placeholder="title"
 							className="input input-bordered"
@@ -103,7 +112,7 @@ export default function AddTaskModal() {
 						</label>
 						<select 
 							className="select select-bordered"
-							{ ...register("priority", { required: true }) }
+							{ ...register("priority", { required: !editMode }) }
 							defaultValue="low"
 						>
 							<option value="low">Low</option>
