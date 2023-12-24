@@ -31,15 +31,7 @@ export default function AddTaskModal() {
 		newTask.email= user.email;
 		
 		if(editMode) {
-			// Update existing task if edit mode is enabled
-			const updatedTask = {};
-			
-			// Creating object to ensure partial update by assigning only updated fields
-			Object.keys(newTask).map(objKey => {
-				if(newTask[objKey]) updatedTask[objKey] = newTask[objKey];
-			})
-			
-			axiosSecure.patch(`/tasks/${id}`, updatedTask)
+			axiosSecure.patch(`/tasks/${id}`, newTask)
 				.then(({ data }) => {
 					if(data.acknowledged) successToast("Successfully updated task");
 				})

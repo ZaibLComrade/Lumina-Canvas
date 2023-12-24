@@ -11,6 +11,8 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import useToast from "../hooks/useToast";
 import { FaEdit } from "react-icons/fa";
 import useModalProps from "../hooks/useModalProps";
+import {useDrag} from "react-dnd";
+import { ItemTypes } from "../main";
 
 const getPriority = (priority) => {
 	if(priority === "high") return <img className="w-10 h-10" src={ highPri }/>
@@ -24,6 +26,16 @@ export default function TaskCard({ _id, title, description, priority, deadline, 
 	const { successToast } = useToast()
 	const axiosSecure = useAxiosSecure();
 	const { setEditMode, setId, setToggleModal } = useModalProps();
+	
+	// Drag and drop functionality
+	const [{ isDragging }, drag] = useDrag(() => ({
+		type: ItemTypes.CARD,
+		item: { _id },
+		collect: (monitor) => ({
+			item: monitor.getItem(),
+			isDragging: !!monitor.isDragging()
+		})
+	}))
 	
 	// Handles delete operation
 	const handleDelete = () => {
@@ -55,7 +67,7 @@ export default function TaskCard({ _id, title, description, priority, deadline, 
 	}
 	
 	const date = format(new Date(deadline), "PPP")
-	return <div className="relative p-4 bg-white border rounded-2xl space-y-3 border-gray-2">
+	return <div ref={ drag } style={{ opacity: isDragging ? 0.5 : 1, cursor: "move" }} className="relative p-4 bg-white border rounded-2xl space-y-3 border-gray-2">
 		{/* Header */}
 		<div className="flex md:max-lg:flex-col align-center gap-4">
 			<div className="flex align-center grow gap-2">
@@ -67,7 +79,7 @@ export default function TaskCard({ _id, title, description, priority, deadline, 
 			</div>
 			
 			{/* Status */}
-			<div className="flex items-center"><Status state={ status }/></div>
+			<div className="flex items-center"><Status _id={ _id } refetch={ refetch } state={ status }/></div>
 		</div>
 		
 		{/* Description */}
